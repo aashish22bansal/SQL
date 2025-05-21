@@ -7,7 +7,6 @@
     <ul>
       <li>PL/SQL code that executes based on an event in the database, that is, before an insert of a row, and after an insert of a row.</li>
       <li>
-        
       </li>
     </ul>
   </div>
