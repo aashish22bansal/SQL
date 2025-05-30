@@ -1,0 +1,310 @@
+Microsoft Windows [Version 10.0.26100.4061]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\aashi\GitHub\My Repositories\SQL>sqlplus EXPERIMENT/EXPERIMENT@localhost:1521/XE
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Sat May 31 03:24:16 2025
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Sat May 31 2025 03:22:18 +05:30
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SELECT * FROM ALL_OBJECTS FETCH FIRST 1 ROWS ONLY;
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+SYS
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+ORA$BASE
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+       134                EDITION                 28-SEP-21 28-SEP-21
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+2021-09-28:04:31:28 VALID   N N N         64
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+NONE                 Y N
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+N N N
+
+OWNER
+--------------------------------------------------------------------------------
+OBJECT_NAME
+--------------------------------------------------------------------------------
+SUBOBJECT_NAME
+--------------------------------------------------------------------------------
+ OBJECT_ID DATA_OBJECT_ID OBJECT_TYPE             CREATED   LAST_DDL_
+---------- -------------- ----------------------- --------- ---------
+TIMESTAMP           STATUS  T G S  NAMESPACE
+------------------- ------- - - - ----------
+EDITION_NAME
+--------------------------------------------------------------------------------
+SHARING            E O A
+------------------ - - -
+DEFAULT_COLLATION
+--------------------------------------------------------------------------------
+D S I CREATED_APPID CREATED_VSNID MODIFIED_APPID MODIFIED_VSNID
+- - - ------------- ------------- -------------- --------------
+
+
+SQL> show con_name;
+
+CON_NAME
+------------------------------
+CDB$ROOT
+SQL> show pdbs;    
+SP2-0382: The SHOW PDBS command is not available
+SQL> show pdbs 
+SP2-0382: The SHOW PDBS command is not available
+SQL> SP2-0042: unknown command "s" - rest of line ignored.
+SQL>
+
+C:\Users\aashi\GitHub\My Repositories\SQL>sqlplus / as SYSDBA                            
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Sat May 31 03:46:42 2025
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+ERROR:
+ORA-12560: TNS:protocol adapter error
+
+
+Enter user-name: SYS
+Enter password: 
+ERROR:
+ORA-12560: TNS:protocol adapter error
+
+
+Enter user-name: 123Aashish456
+Enter password: 
+ERROR:
+ORA-12560: TNS:protocol adapter error
+
+
+SP2-0157: unable to CONNECT to ORACLE after 3 attempts, exiting SQL*Plus
+
+C:\Users\aashi\GitHub\My Repositories\SQL>sqlplus SYS/123Aashish@localhost:1521/XE as SYSDBA
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Sat May 31 03:47:14 2025
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SHOW PDBS;
+
+    CON_ID CON_NAME                       OPEN MODE  RESTRICTED
+---------- ------------------------------ ---------- ----------
+         2 PDB$SEED                       READ ONLY  NO
+         3 XEPDB1                         READ WRITE NO
+SQL> ALTER PLUGGABLE DATABASE ORCLPDB OPEN;
+ALTER PLUGGABLE DATABASE ORCLPDB OPEN
+*
+ERROR at line 1:
+ORA-65011: Pluggable database ORCLPDB does not exist.
+
+
+SQL> ALTER PLUGGABLE DATABASE XEPDB1 OPEN;  
+ALTER PLUGGABLE DATABASE XEPDB1 OPEN
+*
+ERROR at line 1:
+ORA-65019: pluggable database XEPDB1 already open
+
+
+SQL> ALTER SESSION SET CONTAINER=XEPDB1
+  2  ;
+
+Session altered.
+
+SQL> SHOW CON_NAME;
+
+CON_NAME
+------------------------------
+XEPDB1
+SQL> CREATE ROLE EXPERIMENT_READ_ROLE;
+
+Role created.
+
+SQL> CREATE ROLE EXPERIMENT_WRITE_ROLE;
+
+Role created.
+
+SQL> EXIT
+Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+C:\Users\aashi\GitHub\My Repositories\SQL>  

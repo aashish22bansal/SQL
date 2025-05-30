@@ -1,0 +1,1 @@
+CREATE ROLE Experiment_WRITE_ROLE;
