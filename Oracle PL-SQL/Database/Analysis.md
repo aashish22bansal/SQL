@@ -1,8 +1,6 @@
----
-
 ## 🧑‍💻 What are worst mistakes a fresher can make and makes as an Oracle PL/SQL developer during the analysis of the requirements given before development begins?
 
-| #  | 🟢 | Mistake                                                      | Impact                                                        | Fix/Best Practice                                                                                  |
+| #  | 🟢 | Mistake                                                      | Impact                                                        | Fix-Best Practice                                                                                  |
 |----|-----|--------------------------------------------------------------|---------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 | 1  | 🤔  | Not Clarifying Business Logic                                | Incorrect procedures/functions that don't match use cases      | Ask detailed "what-if" and boundary condition questions to clarify all scenarios                   |
 | 2  | 🐢  | Ignoring Data Volume and Performance Requirements            | Slow-performing queries or memory issues                       | Ask about data scale (rows per table, frequency of execution)                                      |
@@ -16,7 +14,7 @@
 | 10 | 🗺️  | Not Creating a Pseudocode or Flow Before Coding              | Poorly designed code, hard to debug or extend                  | Always draft pseudocode or flowcharts to validate understanding                                    |
 | 11 | 📚  | Lack of Documentation During Analysis                        | Memory-based coding, missing clarity during peer reviews       | Write a basic design document or requirement mapping before coding begins                          |
 
----
+
 
 ## 🧩 How to figure out the edge cases for any requirement?
 

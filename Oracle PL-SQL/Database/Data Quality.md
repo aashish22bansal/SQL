@@ -1,4 +1,4 @@
----
+
 
 ## 📊 Data Quality Checks to Analyze in Oracle PL/SQL Development
 
@@ -40,7 +40,7 @@
 | 34 | 🔀  | Data Drift Detection              | Compare current data distribution to historical, detect silent pattern shifts                                |
 | 35 | 🛠️  | Transformation Rule Fidelity      | ETL rules applied accurately (e.g., NULL replaced with 'NA', decimals rounded)                               |
 
----
+
 
 ## ✅ Fundamental Data Quality Checks (Core-Level)
 
