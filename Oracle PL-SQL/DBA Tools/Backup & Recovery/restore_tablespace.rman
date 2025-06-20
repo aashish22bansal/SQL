@@ -1,0 +1,4 @@
+RUN {
+  RESTORE TABLESPACE users;
+  RECOVER TABLESPACE users;
+}

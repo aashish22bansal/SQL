@@ -1,0 +1,3 @@
+BACKUP CURRENT CONTROLFILE FORMAT '/u01/backups/ctrl_%U.bkp';
+
+BACKUP SPFILE FORMAT '/u01/backups/spfile_%U.bkp';

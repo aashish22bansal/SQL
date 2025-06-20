@@ -1,0 +1,10 @@
+-- ===============================
+-- SQL Developer Dashboard Setup (Manual)
+-- ===============================
+-- 1. Open SQL Developer > View > Reports > User Defined Reports
+-- 2. Right-click > New Report > Set:
+--    - Name: Backup Summary Dashboard
+--    - Description: Shows status, durations, and failures
+--    - SQL Text: Use any of the reports above
+--    - Display: Chart (Pie/Bar/Tabular)
+-- 3. Save and Run periodically

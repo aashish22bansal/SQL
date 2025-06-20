@@ -1,0 +1,152 @@
+/*
+The toolkit now includes a full Backup & Recovery section with:
+
+1. RMAN Scripts:
+* Full & incremental backups
+* Archive log, control file, SPFILE backups
+* Restore, recovery, PITR, tablespace restore
+* Validation & retention cleanup
+* Backup job reports
+
+2. Shell Wrappers (.sh):
+* full_backup.sh, archive_backup.sh, validate_db.sh
+
+3. Automation Setup:
+* Linux cron jobs
+* Windows .bat files + Task Scheduler setup
+*/
+-- ===============================
+-- Backup & Recovery Scripts (RMAN)
+-- ===============================
+
+-- 1. Full Database Backup
+-- File: full_backup.rman
+RUN {
+  ALLOCATE CHANNEL c1 DEVICE TYPE DISK;
+  BACKUP DATABASE FORMAT '/u01/backups/DB_%U.bkp';
+  BACKUP CURRENT CONTROLFILE FORMAT '/u01/backups/ctrl_%U.bkp';
+  RELEASE CHANNEL c1;
+}
+
+-- 2. Incremental Backups
+-- File: level0_backup.rman
+BACKUP INCREMENTAL LEVEL 0 DATABASE FORMAT '/u01/backups/inc0_%U.bkp';
+
+-- File: level1_backup.rman
+BACKUP INCREMENTAL LEVEL 1 DATABASE FORMAT '/u01/backups/inc1_%U.bkp';
+
+-- 3. Archive Log Backup
+-- File: archive_backup.rman
+BACKUP ARCHIVELOG ALL DELETE INPUT FORMAT '/u01/backups/arch_%U.arc';
+
+-- 4. Control File and SPFILE Backup
+-- File: backup_control_spfile.rman
+BACKUP CURRENT CONTROLFILE FORMAT '/u01/backups/ctrl_%U.bkp';
+BACKUP SPFILE FORMAT '/u01/backups/spfile_%U.bkp';
+
+-- 5. Restore & Recovery
+-- File: restore_db.rman
+RUN {
+  STARTUP MOUNT;
+  RESTORE DATABASE;
+  RECOVER DATABASE;
+  ALTER DATABASE OPEN RESETLOGS;
+}
+
+-- 6. Point-in-Time Recovery
+-- File: point_in_time_recovery.rman
+RUN {
+  SET UNTIL TIME "TO_DATE('2025-06-18 23:59:00','YYYY-MM-DD HH24:MI:SS')";
+  RESTORE DATABASE;
+  RECOVER DATABASE;
+  ALTER DATABASE OPEN RESETLOGS;
+}
+
+-- 7. Tablespace Backup & Recovery
+-- File: backup_tablespace.rman
+BACKUP TABLESPACE users FORMAT '/u01/backups/users_ts_%U.bkp';
+
+-- File: restore_tablespace.rman
+RUN {
+  RESTORE TABLESPACE users;
+  RECOVER TABLESPACE users;
+}
+
+-- 8. Validate Backups
+-- File: validate_backup.rman
+VALIDATE BACKUPSET '/u01/backups/DB_1nnn.bkp';
+
+-- File: validate_database.rman
+VALIDATE DATABASE;
+
+-- 9. Retention Management
+-- File: delete_old_backups.rman
+DELETE NOPROMPT BACKUP COMPLETED BEFORE 'SYSDATE-7';
+
+-- File: crosscheck_and_delete.rman
+CROSSCHECK BACKUP;
+DELETE EXPIRED BACKUP;
+
+-- 10. Reports & Logs
+-- File: backup_status.sql
+SELECT START_TIME, END_TIME, STATUS, INPUT_TYPE 
+FROM V$RMAN_BACKUP_JOB_DETAILS ORDER BY START_TIME DESC;
+
+-- File: backup_pieces.sql
+SELECT PIECE#, STATUS, START_TIME, COMPLETION_TIME, HANDLE 
+FROM V$BACKUP_PIECE ORDER BY COMPLETION_TIME DESC;
+
+-- ===============================
+-- Shell Script Wrappers (RMAN)
+-- ===============================
+
+-- full_backup.sh
+#!/bin/bash
+export ORACLE_SID=mydb
+. oraenv <<< mydb
+rman target / log=/u01/logs/full_backup_$(date +%Y%m%d).log <<EOF
+@/u01/scripts/email_alert.sh
+@/u01/scripts/full_backup.rman
+EOF
+
+-- archive_backup.sh
+#!/bin/bash
+export ORACLE_SID=mydb
+. oraenv <<< mydb
+rman target / log=/u01/logs/archive_backup_$(date +%Y%m%d).log <<EOF
+@/u01/scripts/archive_backup.rman
+EOF
+
+-- validate_db.sh
+#!/bin/bash
+export ORACLE_SID=mydb
+. oraenv <<< mydb
+rman target / log=/u01/logs/validate_$(date +%Y%m%d).log <<EOF
+@/u01/scripts/validate_database.rman
+EOF
+
+-- ===============================
+-- CRON JOB Automation (Linux)
+-- ===============================
+
+-- Edit crontab with: crontab -e
+-- Example entries:
+0 1 * * * /u01/scripts/full_backup.sh
+0 2 * * * /u01/scripts/archive_backup.sh
+0 3 * * 0 /u01/scripts/validate_db.sh
+
+-- ===============================
+-- Windows Task Scheduler Automation
+-- ===============================
+-- Create .bat files:
+-- full_backup.bat
+@echo off
+set ORACLE_SID=mydb
+call oraenv
+rman target / cmdfile=C:\scripts\full_backup.rman log=C:\logs\full_backup.log
+
+-- Use Task Scheduler to schedule these .bat files:
+-- Task > Trigger: Daily at 1 AM
+-- Action: Start a program -> C:\scripts\full_backup.bat
+
+-- END OF TOOLKIT

@@ -1,0 +1,1 @@
+BACKUP TABLESPACE users FORMAT '/u01/backups/users_ts_%U.bkp';

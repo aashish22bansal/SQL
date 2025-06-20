@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Oracle DBA Tools: Monitoring & Alerts Script Catalog</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 2em auto; 
+      max-width: 900px; 
+      background: #f9f9f9; 
+      color: #222; 
+      line-height: 1.6;
+    }
+    h1, h2, h3 { color: #2d4a7a; margin-top: 2em; }
+    h1 { font-size: 2.2em; margin-bottom: 0.5em; }
+    h2 { font-size: 1.5em; margin-bottom: 0.5em; }
+    h3 { font-size: 1.15em; margin-bottom: 0.3em; }
+    pre, code { 
+      background: #f4f4f4; 
+      padding: 0.5em 0.7em; 
+      border-radius: 4px; 
+      font-size: 1em; 
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+    }
+    ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+    ul ul, ol ul { margin-bottom: 0; }
+    .section { margin-bottom: 2.5em; }
+    hr { border: none; border-top: 1px solid #ddd; margin: 2.5em 0; }
+    .emoji { font-size: 1.2em; vertical-align: middle; }
+    code { color: #2d4a7a; }
+    @media (max-width: 600px) {
+      body { margin: 1em; }
+      pre { font-size: 0.95em; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Oracle DBA Tools: Monitoring &amp; Alerts Script Catalog</h1>
+  <p>
+    In the <strong>Monitoring &amp; Alerts</strong> section of Oracle DBA tools, scripts are designed to detect issues before they impact the system, notify DBAs, and provide insight into performance, availability, and space management.
+  </p>
+  <hr>
+
+  <h2 class="emoji">📡 Monitoring &amp; Alerts Script Catalog</h2>
+
+  <div class="section">
+    <h3 class="emoji">🧠 1. Instance Health Check Script</h3>
+    <p>Checks key health indicators.</p>
+    <pre><code>-- instance_health.sql
+SELECT status, database_status, instance_name, host_name FROM v$instance;
+SELECT name, open_mode, log_mode FROM v$database;
+SELECT COUNT(*) invalid_objects FROM dba_objects WHERE status = 'INVALID';
+</code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">💽 2. Tablespace Usage Monitoring</h3>
+    <p>Alerts on critical usage thresholds.</p>
+    <pre><code>-- monitor_tablespace.sql
+SELECT 
+    tablespace_name,
+    ROUND(used_percent, 2) AS used_pct
+FROM dba_tablespace_usage_metrics
+WHERE used_percent > 85;
+</code></pre>
+    <p>You can wrap this in a shell script to send email alerts if critical thresholds are breached.</p>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">🗂️ 3. Datafile Autoextend &amp; Free Space</h3>
+    <pre><code>-- datafile_space.sql
+SELECT 
+    file_name, 
+    tablespace_name, 
+    bytes/1024/1024 AS size_mb,
+    autoextensible, 
+    maxbytes/1024/1024 AS max_mb
+FROM dba_data_files
+WHERE 
+        autoextensible = 'NO' 
+    OR  bytes/maxbytes > 0.9
+;
+</code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">🕵️ 4. Archive Log Usage Monitoring</h3>
+    <p>Prevents ARCH process failures.</p>
+    <pre><code>-- archive_dest_usage.sql
+SELECT 
+    DEST_ID, 
+    DEST_NAME, 
+    STATUS, 
+    SPACE_LIMIT/1024/1024 AS limit_mb,
+    SPACE_USED/1024/1024 AS used_mb,
+    ROUND((SPACE_USED / SPACE_LIMIT) * 100, 2) AS used_pct
+FROM V$ARCHIVED_LOG_DEST
+WHERE SPACE_USED / SPACE_LIMIT > 0.85;
+</code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">🔄 5. RMAN Backup Status Monitor</h3>
+    <p>Detects failures in recent jobs.</p>
+    <pre><code>-- rman_backup_check.sql
+SELECT 
+    STATUS, 
+    TO_CHAR(START_TIME, 'YYYY-MM-DD HH24:MI') AS started,
+    TO_CHAR(END_TIME, 'YYYY-MM-DD HH24:MI') AS ended,
+    INPUT_TYPE, 
+    OUTPUT_DEVICE_TYPE
+FROM V$RMAN_BACKUP_JOB_DETAILS
+WHERE 
+        START_TIME > SYSDATE - 1
+    AND STATUS != 'COMPLETED';
+</code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">🔁 6. Blocked Sessions Detector</h3>
+    <pre><code>-- blocked_sessions.sql
+SELECT 
+    s1.username || '@' || s1.machine || ' (SID=' || s1.sid || ')' AS blocker,
+    s2.username || '@' || s2.machine || ' (SID=' || s2.sid || ')' AS blocked
+FROM 
+    v$lock l1, 
+    v$session s1, 
+    v$lock l2, 
+    v$session s2
+WHERE 
+        s1.sid = l1.sid 
+    AND s2.sid = l2.sid
+    AND l1.BLOCK = 1 
+    AND l2.request > 0
+    AND l1.id1 = l2.id1 
+    AND l1.id2 = l2.id2
+;
+</code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">📉 7. Session Count and Load Monitoring</h3>
+    <pre><code>-- active_sessions.sql
+SELECT COUNT(*) AS active_sessions
+FROM v$session
+WHERE 
+        status = 'ACTIVE' 
+    AND username IS NOT NULL
+;
+</code></pre>
+    <pre><code>-- high_cpu_sessions.sql
+SELECT 
+    s.sid, 
+    s.serial#, 
+    s.username, 
+    s.program, 
+    se.value/100 AS cpu_seconds
+FROM 
+    v$session s, 
+    v$sesstat se, 
+    v$statname sn
+WHERE 
+        se.statistic# = sn.statistic#
+    AND sn.name = 'CPU used by this session'
+    AND se.sid = s.sid
+    AND se.value > 1000000
+ORDER BY 
+    se.value DESC
+;
+</code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">📬 8. Email Alert Shell Wrapper</h3>
+    <p>Example for space monitoring:</p>
+    <pre><code>#!/bin/bash
+sqlplus -s / as sysdba &lt;&lt;EOF &gt; /tmp/space_alert.txt
+SET HEADING OFF
+SET FEEDBACK OFF
+
+SELECT tablespace_name, ROUND(used_percent, 2)
+FROM dba_tablespace_usage_metrics
+WHERE used_percent > 85;
+EOF
+
+if grep -q "%" /tmp/space_alert.txt; then
+  mail -s "⚠️ Oracle Tablespace Alert on $(hostname)" dba_team@example.com &lt; /tmp/space_alert.txt
+fi
+</code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3 class="emoji">📈 9. Monitoring Integration Add-ons</h3>
+    <ul>
+      <li>Integrate with:
+        <ul>
+          <li>Nagios/Check_MK</li>
+          <li>Zabbix</li>
+          <li>Oracle Enterprise Manager</li>
+        </ul>
+      </li>
+      <li>Use <code>check_oracle_health</code> plugin or REST APIs with shell scripts.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h3 class="emoji">📦 10. monitoring_alert_log Table</h3>
+    <ul>
+      <li>Logs:
+        <ul>
+          <li>Alert type</li>
+          <li>Timestamp</li>
+          <li>Hostname</li>
+          <li>Message</li>
+          <li>Severity (WARNING, CRITICAL, etc.)</li>
+        </ul>
+      </li>
+    </ul>
+    <p><span class="emoji">🧩</span> <strong>Shell Script Integration</strong><br>
+    <code>tablespace_alert.sh</code> now inserts an alert entry whenever usage exceeds the threshold.</p>
+  </div>
+
+  <div class="section">
+    <h3 class="emoji">📊 11. Monitoring Alert Summary Reports</h3>
+    <ol>
+      <li><code>alert_summary_daily.sql</code>
+        <ul>
+          <li>Daily alert counts by type and severity</li>
+        </ul>
+      </li>
+      <li><code>alert_trend_last7.sql</code>
+        <ul>
+          <li>Frequency of alert types in the last 7 days</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+BACKUP ARCHIVELOG ALL DELETE INPUT FORMAT '/u01/backups/arch_%U.arc';
